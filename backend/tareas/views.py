@@ -7,7 +7,7 @@ from .serializers import UsuarioSerializer
 from django.contrib.auth.models import User 
 
 class TareaViewSet(viewsets.ModelViewSet):
-    queryset = Tarea.objects.all()
+    queryset = Tarea.objects.all()   # necesario para el router
     serializer_class = TareaSerializer
     permission_classes = [IsAuthenticated]
 
@@ -20,4 +20,4 @@ class TareaViewSet(viewsets.ModelViewSet):
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UsuarioSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated] #solo los que estén logueados podrán ver usuarios
