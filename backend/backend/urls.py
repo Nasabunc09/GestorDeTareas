@@ -17,14 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from tareas.views import TareaViewSet
+from tareas.views import TareaViewSet, UsuarioViewSet
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+# Router para las APIs
 router = routers.DefaultRouter()
-router.register(r'tareas',TareaViewSet)
+router.register(r'tareas', TareaViewSet)
+router.register(r'users', UsuarioViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    
-
+    path('admin/', admin.site.urls),  # <- esta línea permite acceder al admin
+    path('api/', include('tareas.urls')),  
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

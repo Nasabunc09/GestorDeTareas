@@ -26,9 +26,19 @@ class Tarea (models.Model):
         default = "media"
     )
 
-    usuarios = models.ManyToManyField(User,relates_name = "tareas")
+    usuarios = models.ManyToManyField(User,related_name = "tareas")
 
     def __str__(self):
         return self.titulo
 
+class Perfil(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    rol = models.CharField(
+        max_length=20,
+        choices=[("admin", "Administrador"), ("estandar", "Usuario estándar")],
+        default="estandar"
+    )
+
+    def __str__(self):
+        return f"{self.user.username} ({self.rol})"
 
